@@ -8,24 +8,74 @@
                 background:#333333;
                 position:relative;
                 width: 100vw;
-                height: 100vw;
+                height: 100vh;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                flex-flow:column;
+
             }
             .colorCode{
                 background:white;
-                colorCode#333333;
-                position:absolute;
-                top:50%;
-                left: 50%;
-                transform:translate(-50%,-50%);
+                color:#333333;
                 padding: 20px 50px;
-                width: auto;
+                text-align: center;
+                width: 600px;
+            }
+            #stopTrigger{
+                display:block;
+                cursor:pointer;
+                padding: 12px 30px;
+                font-size: 20px;
+                font-weight: bold;
+                border:none;
+                border-radius:100px;
+                text-align: center;
+                width: 300px;
+                background:green;
+                color:white;
+            }
+            #stopTrigger:hover{
+                opacity:.8;
             }
         </style>
     </head>
     <body>
         <div id="bgArea">
             <h1 class="colorCode">#333333</h1>
+            <button id="stopTrigger">START!</button>
         </div>
+        <script>
+            'use strict'
+            const bgArea = document.getElementById("bgArea");
+            const colorCode = document.querySelector(".colorCode");
+            const stopTrigger = document.getElementById("stopTrigger");
 
+            // カラーコードランダム生成
+            function setColorCode(){
+                let createColorCode = Math.floor(Math.random() * 16777215).toString(16);
+                for(let index=createColorCode.length; index < 6; index++){
+                    createColorCode = '0' + createColorCode;
+                }
+                // カラーコードをフロントに反映
+                colorCode.textContent = "#" + createColorCode;
+                bgArea.style.background = "#" + createColorCode;
+            }
+
+
+
+
+            stopTrigger.addEventListener("click",function(){
+                stopTrigger.classList.toggle("start");
+                let loopBg = setInterval(setColorCode,1500);
+                if(stopTrigger.classList.contains("start")!=true){
+                    clearInterval(loopBg);
+                    stopTrigger.textContent = "START!";
+                }else{
+                    stopTrigger.textContent = "STOP！";
+                }
+            })
+
+        </script>
     </body>
 </html>
