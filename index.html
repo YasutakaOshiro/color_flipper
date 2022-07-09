@@ -22,7 +22,7 @@
                 text-align: center;
                 width: 600px;
             }
-            #stopTrigger{
+            #trigger{
                 display:block;
                 cursor:pointer;
                 padding: 12px 30px;
@@ -35,7 +35,7 @@
                 background:green;
                 color:white;
             }
-            #stopTrigger:hover{
+            #trigger:hover{
                 opacity:.8;
             }
         </style>
@@ -43,14 +43,13 @@
     <body>
         <div id="bgArea">
             <h1 class="colorCode">#333333</h1>
-            <button id="stopTrigger">START!</button>
+            <button id="trigger">START!</button>
         </div>
         <script>
             'use strict'
             const bgArea = document.getElementById("bgArea");
             const colorCode = document.querySelector(".colorCode");
-            const stopTrigger = document.getElementById("stopTrigger");
-
+            const trigger = document.getElementById("trigger");
             // カラーコードランダム生成
             function setColorCode(){
                 let createColorCode = Math.floor(Math.random() * 16777215).toString(16);
@@ -63,18 +62,18 @@
             }
 
 
-
-
-            stopTrigger.addEventListener("click",function(){
-                stopTrigger.classList.toggle("start");
-                let loopBg = setInterval(setColorCode,1500);
-                if(stopTrigger.classList.contains("start")!=true){
+            let loopBg;
+            trigger.addEventListener("click",function(){
+                if(trigger.classList.contains("active")==true){
                     clearInterval(loopBg);
-                    stopTrigger.textContent = "START!";
+                    trigger.textContent = "START!";
+                    trigger.classList.toggle("active");
                 }else{
-                    stopTrigger.textContent = "STOP！";
+                    loopBg = setInterval(setColorCode,1500);
+                    trigger.textContent = "STOP!";
+                    trigger.classList.toggle("active");
                 }
-            })
+            });
 
         </script>
     </body>
